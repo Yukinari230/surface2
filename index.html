@@ -1,0 +1,74 @@
+<html>
+<head>
+    <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
+    <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+
+    <py-env>
+        - plotly
+        - numpy
+        - matplotlib
+    </py-env>
+</head>
+
+<body>
+
+<div class="row">
+<div id="my_chart"></div>
+</div>
+
+<script type='text/javascript'>
+        function plot(graph, chart) {
+            var figure = JSON.parse(graph)
+            Plotly.newPlot(chart, figure, {});
+        }
+</script>
+
+<py-script>
+import js
+import json
+import plotly
+import plotly.graph_objects as go
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+fig = plt.figure(figsize=[9,9])
+ax = fig.add_subplot(projection='3d')
+
+m=100
+n=100
+a=10
+
+fig=go.Figure()
+
+for i in range(m):
+  xx=[]
+  yy=[]
+  zz=[]
+  for j in range(n):
+    x=i/m-1/2
+    y=j/n-1/2
+    x=x*a
+    y=y*a
+    z=np.exp(-x*x-y*y)
+    xx.append(x)
+    yy.append(y)
+    zz.append(z)
+
+  fig.add_trace(go.Scatter3d(x=xx,
+                           y=yy,
+                           z=zz,  
+                           marker=dict(size=1)
+                           ))
+
+fig
+
+
+</py-script>
+</body>
+</html>
+
+
+
